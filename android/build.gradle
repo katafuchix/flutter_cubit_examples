@@ -1,0 +1,52 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+
+
+// afterEvaluateを一切使わない強制設定
+subprojects {
+    // 1. namespaceエラー対策 (プラグイン追加時に即座に実行)
+    project.plugins.whenPluginAdded { plugin ->
+        if ("com.android.build.gradle.AppPlugin" == plugin.class.name || "com.android.build.gradle.LibraryPlugin" == plugin.class.name) {
+            project.android {
+                if (namespace == null) namespace = project.group.toString()
+            }
+        }
+    }
+}
+
+// ファイルの一番最後に追記してください
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            // 何もしない（空でもこれを入れることで依存関係を再スキャンさせる）
+        }
+    }
+}
+
+// エラーが出ている image_gallery_saver だけを名指しで 1.8 に引き戻す
+// 全体を17にしようとするから衝突するので、こいつだけは1.8で通すように強制します
+allprojects {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        if (project.name == 'image_gallery_saver') {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
+    }
+}
