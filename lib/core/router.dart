@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 
+import '../screen/cocktail_search/cocktail_search.screen.dart';
 import '../screen/counter/counter_screen.dart';
 import '../screen/main_page.dart';
 import '../screen/user/user_screen.dart';
@@ -28,6 +29,15 @@ final router = GoRouter(initialLocation: '/', observers: [
       return CupertinoPage(
         key: state.pageKey,
         child: const UserScreen(),
+      );
+    },
+  ),
+  GoRoute(
+    path: '/cocktail',
+    pageBuilder: (context, state) {
+      return CupertinoPage(
+        key: state.pageKey,
+        child: const CocktailSearchScreen(),
       );
     },
   ),

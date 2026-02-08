@@ -11,7 +11,7 @@ class MainPage extends StatelessWidget {
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: const Text('Flutter Qubit Example'),
+          title: const Text('Flutter Cubit Examples'),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: Center(
@@ -29,6 +29,13 @@ class MainPage extends StatelessWidget {
             title: 'Users',
             subtitle: 'Fetching API\'s with Cubits in Flutter',
             routePath: '/user',
+          ),
+          // Cocktail Search API Example
+          _buildListItem(
+            context: context,
+            title: 'Cocktail',
+            subtitle: 'Fetching API\'s with Cocktail Search',
+            routePath: '/cocktail',
           ),
         ])));
   }

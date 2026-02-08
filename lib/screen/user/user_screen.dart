@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'repository/user_repository_impl.dart';
 import 'state/user_state.dart';
-import 'user_qubit.dart';
+import 'user_cubit.dart';
 
 // cf. https://dev.to/dev-vickie/fetching-apis-with-cubits-in-flutter-b8f
 class UserScreen extends StatelessWidget {

@@ -4,7 +4,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_cubit_examples/screen/user/repository/user_repository.dart';
 import 'package:flutter_cubit_examples/screen/user/model/user.dart';
 import 'package:flutter_cubit_examples/screen/user/state/user_state.dart';
-import 'package:flutter_cubit_examples/screen/user/user_qubit.dart';
+import 'package:flutter_cubit_examples/screen/user/user_cubit.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 
