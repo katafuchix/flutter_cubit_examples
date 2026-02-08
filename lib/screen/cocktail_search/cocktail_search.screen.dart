@@ -180,11 +180,14 @@ class CocktailSearchPageState extends State<CocktailSearchPage> {
             placeholder: (context, url) => Container(
               color: Colors.grey[200],
               child: const Center(
+                  child: const SizedBox(
+                width: 14,
+                height: 14,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                   color: Colors.grey,
                 ),
-              ),
+              )),
             ),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           )),
