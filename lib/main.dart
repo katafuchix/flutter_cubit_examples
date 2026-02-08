@@ -1,9 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+
+import 'core/colors.dart';
+import 'core/router.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    AppColors colors = MyColors();
+
+    return MaterialApp.router(
+      builder: FlutterSmartDialog.init(),
+      title: 'Flutter Demo',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ja'),
+      ],
+      theme: ThemeData(
+        primaryColor: colors.primary,
+        useMaterial3: true,
+        dialogBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      scaffoldMessengerKey: GlobalSnackBar.scaffoldMessengerKey,
+      routerConfig: router, // ここで定義した地図を渡す
+    );
+  }
+}
+
+class GlobalSnackBar {
+  static final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
+  static void show(String message) {
+    scaffoldMessengerKey.currentState?.clearSnackBars();
+    scaffoldMessengerKey.currentState?.showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+}
+
+/*
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -123,3 +171,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
