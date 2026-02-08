@@ -25,13 +25,6 @@ class CocktailRepositoryImpl implements CocktailRepository {
     // 2. もし response.data が String なら decode が必要ですが、通常はそのままキャストできます
     final data = response.data;
 
-    /*
-    if (response.statusCode == 200) {
-      return SearchResult.fromJson(data).drinks;
-    } else {
-      throw SearchResultError.fromJson(data);
-    }*/
-
     if (data is Map<String, dynamic>) {
       return SearchResult.fromJson(data).drinks;
     } else {
