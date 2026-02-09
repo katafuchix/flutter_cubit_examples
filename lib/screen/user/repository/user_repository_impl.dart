@@ -17,6 +17,15 @@ class UserRepositoryImpl implements UserRepository {
     return response.data.map<User>((item) {
         return User.fromJson(item);
       }).toList();
+
+    // こういう書き方でもOK
+    // return (response.data as List).map((user) => User.fromJson(user)).toList();
+
+    // 安全な書き方
+    // 最も安全で推奨される書き方
+    // final list = response.data as List<dynamic>; // まずListであることを保証
+    // return list.map((item) => User.fromJson(item as Map<String, dynamic>)).toList();
+
   }
 
 }
