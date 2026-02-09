@@ -37,6 +37,13 @@ class MainPage extends StatelessWidget {
             subtitle: 'Fetching API\'s with Cocktail Search',
             routePath: '/cocktail',
           ),
+          // Products API Example
+          _buildListItem(
+            context: context,
+            title: 'Produucts',
+            subtitle: 'Fetching API\'s with Products',
+            routePath: '/products',
+          ),
         ])));
   }
 
