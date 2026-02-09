@@ -44,6 +44,13 @@ class MainPage extends StatelessWidget {
             subtitle: 'Fetching API\'s with Products',
             routePath: '/products',
           ),
+          // Job API Example
+          _buildListItem(
+            context: context,
+            title: 'Job Board',
+            subtitle: 'Fetching API\'s with Job, Tab Example',
+            routePath: '/job_board',
+          ),
         ])));
   }
 

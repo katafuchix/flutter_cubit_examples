@@ -114,6 +114,12 @@ class MyColors extends AppColors {
   Color get button2Bg => Colors.white;
 
   @override
+  Color get black1 => _MyColors.black1;
+
+  @override
+  Color get black2 => _MyColors.black2;
+
+  @override
   Color get white1 => _MyColors.white1;
 
   @override
