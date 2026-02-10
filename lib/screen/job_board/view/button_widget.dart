@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import '../translations/locale_keys.g.dart';
 import '../extensions/context_extension.dart';
 import '../extensions/string_extension.dart';
@@ -38,13 +38,13 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       onTap: () {
         if (!widget.useTimer && widget.onPressed != null)
           widget.onPressed!();
-        else {
+        /*else {
           Fluttertoast.showToast(
             backgroundColor: Colors.red,
             msg: LocaleKeys.pleasePressFiveSecondsMessage.locale,
             timeInSecForIosWeb: 2,
           );
-        }
+        } */
       },
       onTapDown: (_) {
         if (widget.useTimer)
