@@ -17,10 +17,29 @@ class Job with _$Job {
     @JsonKey(name: 'date_posted') required DateTime datePosted,
     @JsonKey(name: 'expected_delivery_date')
     required DateTime expectedDeliveryDate,
+    @Default(JobType.Normal) JobType jobType,
   }) = _Job;
 
   factory Job.fromJson(Map<String, dynamic> json) => _$JobFromJson(json);
 }
+
+/*
+// こう言う書き方もあり
+@Freezed(fromJson: true)
+@JsonSerializable(fieldRename: FieldRename.snake) // これを追加！
+class ProductDelivery with _$ProductDelivery {
+  const factory ProductDelivery({
+    required int id,
+    required String title,
+    required Address pickup,
+    required Address dropOff, // @JsonKeyなしでも自動で 'drop_off' を探してくれる
+    required DateTime datePosted, // 自動で 'date_posted' を探してくれる
+  }) = _ProductDelivery;
+
+  factory ProductDelivery.fromJson(Map<String, dynamic> json) =>
+      _$ProductDeliveryFromJson(json);
+}
+ */
 
 @freezed
 class Address with _$Address {

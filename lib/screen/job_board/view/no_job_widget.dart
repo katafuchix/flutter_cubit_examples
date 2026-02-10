@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:job_board/translations/locale_keys.g.dart';
-import 'package:job_board/utils/extensions/context_extension.dart';
-import 'package:job_board/utils/extensions/string_extension.dart';
-import '../base/constants/app_constants.dart';
+import '../extensions/context_extension.dart';
+import '../constants/app_constants.dart';
+import '../translations/locale_keys.g.dart';
 
 class NoJobWidget extends StatelessWidget {
   const NoJobWidget({
@@ -14,10 +13,10 @@ class NoJobWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.search_off, color: AppColors.black),
+        Icon(Icons.search_off, color: AppColors.black,),
         Text(
-          LocaleKeys.noJobsMessage.locale,
-          style: context.textTheme.bodyText1,
+          LocaleKeys.noJobsMessage,
+          style: context.textTheme.bodyLarge,
         )
       ],
     );

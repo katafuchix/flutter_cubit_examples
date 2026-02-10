@@ -65,6 +65,9 @@ dependencies:
   go_router: ^14.0.0
   cached_network_image: ^3.4.1
   result_dart: ^2.1.1
+  flutter_screenutil: ^5.9.3
+  fluttertoast: ^9.0.0
+  easy_localization: ^3.0.8
 
 dev_dependencies:
   flutter_test:

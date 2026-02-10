@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:job_board/translations/locale_keys.g.dart';
-import 'package:job_board/utils/extensions/context_extension.dart';
-import 'package:job_board/utils/extensions/string_extension.dart';
-import '../base/constants/app_constants.dart';
+import '../translations/locale_keys.g.dart';
+import '../extensions/context_extension.dart';
+import '../extensions/string_extension.dart';
+import '../constants/app_constants.dart';
 
 class ButtonWidget extends StatefulWidget {
   final Function? onPressed;
@@ -22,7 +22,7 @@ class ButtonWidget extends StatefulWidget {
     this.title,
     this.textStyle,
     this.borderColor,
-    this.useTimer: true,
+    this.useTimer = true,
   }) : super(key: key);
 
   @override
@@ -68,7 +68,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           padding: EdgeInsets.all(AppSpacing.spacingSmall.h),
           child: Text(widget.title ?? "-",
               style: widget.textStyle ??
-                  context.textTheme.button?.copyWith(color: AppColors.black)),
+                  context.textTheme.labelLarge?.copyWith(color: AppColors.black)),
         ),
       ),
     );

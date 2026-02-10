@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:job_board/domain/dtos/job_dto.dart';
-import 'package:job_board/utils/extensions/context_extension.dart';
-import 'package:job_board/utils/extensions/string_extension.dart';
-import 'package:job_board/utils/extensions/datetime_extension.dart';
-import '../../../base/constants/app_constants.dart';
-import '../../../core_widgets/button_widget.dart';
-import '../../../translations/locale_keys.g.dart';
+import '../extensions/context_extension.dart';
+import '../extensions/string_extension.dart';
+import '../extensions/datetime_extension.dart';
+import '../constants/app_constants.dart';
+import '../translations/locale_keys.g.dart';
+import '../model/job.dart';
+import 'button_widget.dart';
 
 class JobWidget extends StatelessWidget {
-  final JobResponse job;
+  final Job job;
   final bool showButtons;
   final Function? primaryAction;
   final Function? secondaryAction;
@@ -17,7 +17,7 @@ class JobWidget extends StatelessWidget {
   const JobWidget({
     Key? key,
     required this.job,
-    this.showButtons: false,
+    this.showButtons = false,
     this.primaryAction,
     this.secondaryAction,
   }) : super(key: key);
@@ -37,24 +37,24 @@ class JobWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildText(Text(job.title ?? "-",
-                style: context.textTheme.subtitle1
+                style: context.textTheme.displayMedium
                     ?.copyWith(fontWeight: AppFontUtils.medium))),
             _buildText(
               Text(
                 "${LocaleKeys.pickUp.locale}: ${job.pickup?.addressLine1 ?? "-"}, ${job.pickup?.postcode ?? "-"}",
-                style: context.textTheme.bodyText1,
+                style: context.textTheme.bodyLarge,
               ),
             ),
             _buildText(
               Text(
                 "${LocaleKeys.dropOff.locale}: ${job.dropOff?.addressLine1 ?? "-"}, ${job.dropOff?.postcode ?? "-"}",
-                style: context.textTheme.bodyText1,
+                style: context.textTheme.bodyLarge,
               ),
             ),
             _buildText(
               Text(
                 "${LocaleKeys.deliveryDate.locale}: ${job.expectedDeliveryDate.dateString}",
-                style: context.textTheme.bodyText1
+                style: context.textTheme.bodyLarge
                     ?.copyWith(color: AppColors.secondary),
               ),
             ),
@@ -76,7 +76,7 @@ class JobWidget extends StatelessWidget {
           ButtonWidget(
             onPressed: secondaryAction,
             title: LocaleKeys.reject.locale,
-            textStyle: context.textTheme.button,
+            textStyle: context.textTheme.labelLarge,
             borderColor: AppColors.primary,
           ),
           SizedBox(width: AppSpacing.spacingSmall.w),
@@ -84,7 +84,7 @@ class JobWidget extends StatelessWidget {
             onPressed: primaryAction,
             title: LocaleKeys.accept.locale,
             textStyle:
-                context.textTheme.button?.copyWith(color: AppColors.white),
+                context.textTheme.labelLarge?.copyWith(color: AppColors.white),
             backgroundColor: AppColors.black,
           ),
         ],
