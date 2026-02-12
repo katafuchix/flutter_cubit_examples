@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 import 'constants/app_constants.dart';
-import 'extensions/string_extension.dart';
 import 'state/job_board_state.dart';
 import 'job_board_cubit.dart';
 import 'model/job.dart';
 import 'repository/job_repository_impl.dart';
 import 'constants/locale_keys.dart';
 import 'view/jobs_view.dart';
+import 'view/try_again_widget.dart';
 
 class JobBoardScreen extends StatelessWidget {
   const JobBoardScreen({super.key});
@@ -38,14 +38,11 @@ class JobBoardPageState extends State<JobBoardPage>
 
   @override
   void initState() {
-    super.initState();
     _tabController = TabController(vsync: this, length: 2);
-    context.read<JobBoardCubit>().fetchJobs();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      context.read<JobBoardCubit>().fetchJobs();
+    });
+    super.initState();
   }
 
   @override
@@ -70,7 +67,6 @@ class JobBoardPageState extends State<JobBoardPage>
               }
             },
             builder: (context, state) {
-              print('builder');
               return Column(
                 children: [
                   TabBar(
@@ -93,7 +89,7 @@ class JobBoardPageState extends State<JobBoardPage>
                     ),
                     labelPadding:
                         EdgeInsets.only(bottom: AppSpacing.spacingMedium.h),
-                    tabs: [
+                    tabs: const [
                       Text(LocaleKeys.jobs),
                       Text(LocaleKeys.acceptedJobs),
                     ],
@@ -113,19 +109,19 @@ class JobBoardPageState extends State<JobBoardPage>
                                   key: UniqueKey(),
                                   jobs: results
                                       .where((element) =>
-                                          element.jobType == JobType.Normal)
+                                          element.jobType == JobType.normal)
                                       .toList()),
                               JobsView(
                                   key: UniqueKey(),
                                   isAccepted: true,
                                   jobs: results
                                       .where((element) =>
-                                          element.jobType == JobType.Accepted)
+                                          element.jobType == JobType.accepted)
                                       .toList()),
                             ],
                           );
                         }, error: (String message) {
-                          return _buildLoading();
+                          return TryAgainWidget(message: message);
                         })),
                   ),
                 ],

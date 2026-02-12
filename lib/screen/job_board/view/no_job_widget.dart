@@ -5,15 +5,15 @@ import '../constants/locale_keys.dart';
 
 class NoJobWidget extends StatelessWidget {
   const NoJobWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
+        const Icon(
           Icons.search_off,
           color: AppColors.black,
         ),

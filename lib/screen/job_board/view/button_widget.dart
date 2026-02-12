@@ -2,10 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-//import 'package:fluttertoast/fluttertoast.dart';
-import '../constants/locale_keys.dart';
 import '../extensions/context_extension.dart';
-import '../extensions/string_extension.dart';
 import '../constants/app_constants.dart';
 
 class ButtonWidget extends StatefulWidget {
@@ -17,14 +14,14 @@ class ButtonWidget extends StatefulWidget {
   final bool useTimer;
 
   const ButtonWidget({
-    Key? key,
+    super.key,
     this.onPressed,
     this.backgroundColor,
     this.title,
     this.textStyle,
     this.borderColor,
     this.useTimer = true,
-  }) : super(key: key);
+  });
 
   @override
   State<ButtonWidget> createState() => _ButtonWidgetState();
@@ -48,10 +45,11 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         } */
       },
       onTapDown: (_) {
-        if (widget.useTimer)
-          timer = Timer(Duration(seconds: 5), () {
+        if (widget.useTimer) {
+          timer = Timer(const Duration(seconds: 5), () {
             if (widget.onPressed != null) widget.onPressed!();
           });
+        }
       },
       onTapUp: (_) {
         if (widget.useTimer) timer?.cancel();
@@ -59,7 +57,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       child: Material(
         clipBehavior: Clip.antiAlias,
         shape: BeveledRectangleBorder(
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(8.0)),
+          borderRadius:
+              const BorderRadius.only(bottomRight: Radius.circular(8.0)),
           side: widget.borderColor != null
               ? BorderSide(color: widget.borderColor!, width: 1)
               : BorderSide.none,

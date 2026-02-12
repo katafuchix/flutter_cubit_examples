@@ -4,20 +4,20 @@ part 'job.freezed.dart';
 
 part 'job.g.dart';
 
-enum JobType { Normal, Accepted, Rejected }
+enum JobType { normal, accepted, rejected }
 
 // https://6169a28b09e030001712c4dc.mockapi.io/jobs
 @freezed
 class Job with _$Job {
   const factory Job({
     required int id,
-    required String title,
+    @Default('') String title,
     required Address pickup,
     @JsonKey(name: 'drop_off') required Address dropOff, // スネークケースをキャメルケースに変換
     @JsonKey(name: 'date_posted') required DateTime datePosted,
     @JsonKey(name: 'expected_delivery_date')
     required DateTime expectedDeliveryDate,
-    @Default(JobType.Normal) JobType jobType,
+    @Default(JobType.normal) JobType jobType,
   }) = _Job;
 
   factory Job.fromJson(Map<String, dynamic> json) => _$JobFromJson(json);
@@ -44,8 +44,8 @@ class ProductDelivery with _$ProductDelivery {
 @freezed
 class Address with _$Address {
   const factory Address({
-    @JsonKey(name: 'address_line_1') required String addressLine1,
-    required String postcode,
+    @Default('') String addressLine1,
+    @Default('') String postcode,
   }) = _Address;
 
   factory Address.fromJson(Map<String, dynamic> json) =>

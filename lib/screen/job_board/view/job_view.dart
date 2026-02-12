@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extension.dart';
-import '../extensions/string_extension.dart';
 import '../extensions/datetime_extension.dart';
 import '../constants/app_constants.dart';
 import '../constants/locale_keys.dart';
@@ -75,7 +74,7 @@ class JobWidget extends StatelessWidget {
         children: [
           ButtonWidget(
             onPressed: secondaryAction,
-            title: "LocaleKeys.reject.locale",
+            title: LocaleKeys.reject,
             textStyle: context.textTheme.labelLarge,
             borderColor: AppColors.primary,
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'app_constants.dart';
 
 class AppTheme {
-  var _lightTheme = ThemeData.light().copyWith(
+  final _lightTheme = ThemeData.light().copyWith(
     primaryColor: AppColors.primary,
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.primary,
