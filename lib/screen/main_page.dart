@@ -6,7 +6,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const edgeInsets = EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20);
+    //const edgeInsets = EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20);
     return Scaffold(
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
@@ -50,6 +50,13 @@ class MainPage extends StatelessWidget {
             title: 'Job Board',
             subtitle: 'Fetching API\'s with Job, Tab Example',
             routePath: '/job_board',
+          ),
+          // Weather Example
+          _buildListItem(
+            context: context,
+            title: 'Weather',
+            subtitle: 'getting Weather Example',
+            routePath: '/weather',
           ),
         ])));
   }

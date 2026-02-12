@@ -8,6 +8,7 @@ import '../screen/job_board/job_board_screen.dart';
 import '../screen/main_page.dart';
 import '../screen/products_screen/products_screen.dart';
 import '../screen/user/user_screen.dart';
+import '../screen/weather/weather_screen.dart';
 
 final router = GoRouter(initialLocation: '/', observers: [
   FlutterSmartDialog.observer
@@ -58,6 +59,15 @@ final router = GoRouter(initialLocation: '/', observers: [
       return CupertinoPage(
         key: state.pageKey,
         child: const JobBoardScreen(),
+      );
+    },
+  ),
+  GoRoute(
+    path: '/weather',
+    pageBuilder: (context, state) {
+      return CupertinoPage(
+        key: state.pageKey,
+        child: const WeatherScreen(),
       );
     },
   ),
