@@ -4,7 +4,7 @@ import '../extensions/context_extension.dart';
 import '../extensions/string_extension.dart';
 import '../extensions/datetime_extension.dart';
 import '../constants/app_constants.dart';
-import '../translations/locale_keys.g.dart';
+import '../constants/locale_keys.dart';
 import '../model/job.dart';
 import 'button_widget.dart';
 
@@ -15,18 +15,18 @@ class JobWidget extends StatelessWidget {
   final Function? secondaryAction;
 
   const JobWidget({
-    Key? key,
+    super.key,
     required this.job,
     this.showButtons = false,
     this.primaryAction,
     this.secondaryAction,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       key: key,
-      shape: BeveledRectangleBorder(
+      shape: const BeveledRectangleBorder(
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(8.0)),
         side: BorderSide(color: AppColors.primary, width: 1),
       ),
@@ -36,24 +36,24 @@ class JobWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildText(Text(job.title ?? "-",
+            _buildText(Text(job.title,
                 style: context.textTheme.displayMedium
                     ?.copyWith(fontWeight: AppFontUtils.medium))),
             _buildText(
               Text(
-                "${LocaleKeys.pickUp.locale}: ${job.pickup?.addressLine1 ?? "-"}, ${job.pickup?.postcode ?? "-"}",
+                "${LocaleKeys.pickUp}: ${job.pickup.addressLine1}, ${job.pickup.postcode}",
                 style: context.textTheme.bodyLarge,
               ),
             ),
             _buildText(
               Text(
-                "${LocaleKeys.dropOff.locale}: ${job.dropOff?.addressLine1 ?? "-"}, ${job.dropOff?.postcode ?? "-"}",
+                "${LocaleKeys.dropOff}: ${job.dropOff.addressLine1}, ${job.dropOff.postcode}",
                 style: context.textTheme.bodyLarge,
               ),
             ),
             _buildText(
               Text(
-                "${LocaleKeys.deliveryDate.locale}: ${job.expectedDeliveryDate.dateString}",
+                "${LocaleKeys.deliveryDate}: ${job.expectedDeliveryDate.dateString}",
                 style: context.textTheme.bodyLarge
                     ?.copyWith(color: AppColors.secondary),
               ),
@@ -75,14 +75,14 @@ class JobWidget extends StatelessWidget {
         children: [
           ButtonWidget(
             onPressed: secondaryAction,
-            title: LocaleKeys.reject.locale,
+            title: "LocaleKeys.reject.locale",
             textStyle: context.textTheme.labelLarge,
             borderColor: AppColors.primary,
           ),
           SizedBox(width: AppSpacing.spacingSmall.w),
           ButtonWidget(
             onPressed: primaryAction,
-            title: LocaleKeys.accept.locale,
+            title: LocaleKeys.accept,
             textStyle:
                 context.textTheme.labelLarge?.copyWith(color: AppColors.white),
             backgroundColor: AppColors.black,

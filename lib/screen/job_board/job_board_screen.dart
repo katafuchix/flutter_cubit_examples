@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 import 'constants/app_constants.dart';
-import 'extensions/context_extension.dart';
 import 'extensions/string_extension.dart';
 import 'state/job_board_state.dart';
 import 'job_board_cubit.dart';
 import 'model/job.dart';
 import 'repository/job_repository_impl.dart';
-import 'translations/locale_keys.g.dart';
+import 'constants/locale_keys.dart';
 import 'view/jobs_view.dart';
 
 class JobBoardScreen extends StatelessWidget {
@@ -40,6 +40,7 @@ class JobBoardPageState extends State<JobBoardPage>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    context.read<JobBoardCubit>().fetchJobs();
   }
 
   @override
@@ -47,83 +48,89 @@ class JobBoardPageState extends State<JobBoardPage>
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text("Job Board"),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: BlocConsumer<JobBoardCubit, JobBoardState>(
-        // リスナが呼び出される条件
-        listenWhen: (previous, current) => previous.screen != current.screen,
-        listener: (context, state) {
-          // ローディング制御
-          final isScreenLoading = state.screen is ScreenLoading;
-          if (isScreenLoading) {
-            SmartDialog.showLoading(msg: '検索中...');
-          } else {
-            SmartDialog.dismiss();
-          }
-        },
-          builder: (context, state) {
-            return Column(
-              children: [
-                TabBar(
-                  controller: _tabController,
-                  labelColor: AppColors.black,
-                  unselectedLabelColor: AppColors.black.withOpacity(0.5),
-                  labelStyle: context.textTheme.displayMedium,
-                  unselectedLabelStyle: context.textTheme.displayMedium,
-                  //padding: EdgeInsets.only(top: AppSpacing.spacingMedium.h),
-                  indicatorColor: AppColors.black,
-                  //labelPadding: EdgeInsets.only(bottom: AppSpacing.spacingMedium.h),
-                  tabs: [
-                    Text(LocaleKeys.jobs.locale),
-                    Text(LocaleKeys.acceptedJobs.locale),
-                  ],
-                ),
-                Expanded(
-                  child: Container(
-                    color: AppColors.white,
-                    child:   //CircularProgressIndicator()
-            state.screen.when(initial: () { return _buildLoading(); },
-                loading: () { return _buildLoading(); },
-                success: (List<Job> results) { return _buildLoading(); },
-                error: (String message) { return _buildLoading(); })
-                      
-            /*BaseView<JobBoardViewModel>(
-                      vmBuilder: (context) => JobBoardViewModel(JobBoardService()),
-                      listener: (context, state) => debugPrint(state.runtimeType.toString()),
-                      builder: (context, state) => _buildTabBarView(state as BaseCompletedState),
-                      errorBuilder: (context, state) => TryAgainWidget(errorState: state), 
-                    ),*/
+        appBar: AppBar(
+          centerTitle: false,
+          title: const Text("Job Board"),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        ),
+        body: BlocConsumer<JobBoardCubit, JobBoardState>(
+            // リスナが呼び出される条件
+            listenWhen: (previous, current) =>
+                previous.screen != current.screen,
+            listener: (context, state) {
+              // ローディング制御
+              final isScreenLoading = state.screen is ScreenLoading;
+              if (isScreenLoading) {
+                SmartDialog.showLoading(msg: '検索中...');
+              } else {
+                SmartDialog.dismiss();
+              }
+            },
+            builder: (context, state) {
+              print('builder');
+              return Column(
+                children: [
+                  TabBar(
+                    controller: _tabController,
+                    labelColor: AppColors.black,
+                    unselectedLabelColor: AppColors.black.withOpacity(0.5),
+                    //labelStyle: context.textTheme.bodyLarge,
+                    labelStyle: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                    //unselectedLabelStyle: context.textTheme.bodyLarge,
+                    unselectedLabelStyle: const TextStyle(fontSize: 16),
+                    padding: EdgeInsets.only(top: AppSpacing.spacingMedium.h),
+                    //indicatorColor: AppColors.black,
+                    indicator: const BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                        width: 0,
+                        color: Colors.white,
+                      )),
+                    ),
+                    labelPadding:
+                        EdgeInsets.only(bottom: AppSpacing.spacingMedium.h),
+                    tabs: [
+                      Text(LocaleKeys.jobs),
+                      Text(LocaleKeys.acceptedJobs),
+                    ],
                   ),
-                ),
-              ],
-            );
-          }
-      )
-
-
-
-
-                /*Expanded(
-            child: Container(
-              color: AppColors.white,
-              child: BaseView<JobBoardViewModel>(
-                vmBuilder: (context) => JobBoardViewModel(JobBoardService()),
-                listener: (context, state) =>
-                    debugPrint(state.runtimeType.toString()),
-                builder: (context, state) =>
-                    _buildTabBarView(state as BaseCompletedState),
-                errorBuilder: (context, state) =>
-                    TryAgainWidget(errorState: state),
-              ),
-            ),
-          ),*/
-
-    );
+                  Expanded(
+                    child: Container(
+                        color: AppColors.white,
+                        child: state.screen.when(initial: () {
+                          return _buildLoading();
+                        }, loading: () {
+                          return _buildLoading();
+                        }, success: (List<Job> results) {
+                          return TabBarView(
+                            controller: _tabController,
+                            children: [
+                              JobsView(
+                                  key: UniqueKey(),
+                                  jobs: results
+                                      .where((element) =>
+                                          element.jobType == JobType.Normal)
+                                      .toList()),
+                              JobsView(
+                                  key: UniqueKey(),
+                                  isAccepted: true,
+                                  jobs: results
+                                      .where((element) =>
+                                          element.jobType == JobType.Accepted)
+                                      .toList()),
+                            ],
+                          );
+                        }, error: (String message) {
+                          return _buildLoading();
+                        })),
+                  ),
+                ],
+              );
+            }));
   }
 
   Widget _buildLoading() {
@@ -131,12 +138,4 @@ class JobBoardPageState extends State<JobBoardPage>
       child: CircularProgressIndicator(),
     );
   }
-  /*
-  Widget _buildTabBarView(JobBoardState state) => TabBarView(
-        controller: _tabController,
-        children: [
-          JobsView(jobs: (state.screen)[JobType.Normal]),
-          JobsView(isAccepted: true, jobs: (state.data)[JobType.Accepted]),
-        ],
-      ); */
 }

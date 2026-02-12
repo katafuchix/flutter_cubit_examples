@@ -11,33 +11,36 @@ class JobsView extends StatelessWidget {
   final bool isAccepted;
   final List<Job> jobs;
 
-  const JobsView({Key? key, this.isAccepted = false, this.jobs = const []})
-      : super(key: key);
+  const JobsView({super.key, this.isAccepted = false, this.jobs = const []});
 
   @override
   Widget build(BuildContext context) {
     var vm = context.read<JobBoardCubit>();
+    print("vm");
+    print(vm);
+    print(isAccepted);
     return Container(
       padding: EdgeInsets.all(AppSpacing.spacingMedium.h),
       color: AppColors.white,
       child: jobs.isEmpty
-          ? NoJobWidget()
+          ? const NoJobWidget()
           : RefreshIndicator(
               onRefresh: () async {
                 //await vm.init();
+                await context.read<JobBoardCubit>().fetchJobs();
               },
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     for (int index = 0; index < jobs.length; index++)
                       JobWidget(
-                        key: ValueKey<int>(jobs[index].id!),
+                        key: ValueKey<int>(jobs[index].id),
                         job: jobs[index],
                         showButtons: !isAccepted,
-                        //primaryAction: () =>
-                        //    vm.changeTypeOfJob(index, JobType.Accepted),
-                        //secondaryAction: () =>
-                        //    vm.changeTypeOfJob(index, JobType.Rejected),
+                        primaryAction: () =>
+                            vm.changeTypeOfJob(index, JobType.Accepted),
+                        secondaryAction: () =>
+                            vm.changeTypeOfJob(index, JobType.Rejected),
                       )
                   ],
                 ),

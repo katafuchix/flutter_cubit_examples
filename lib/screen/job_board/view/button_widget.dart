@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 //import 'package:fluttertoast/fluttertoast.dart';
-import '../translations/locale_keys.g.dart';
+import '../constants/locale_keys.dart';
 import '../extensions/context_extension.dart';
 import '../extensions/string_extension.dart';
 import '../constants/app_constants.dart';
@@ -36,8 +37,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (!widget.useTimer && widget.onPressed != null)
-          widget.onPressed!();
+        //if (!widget.useTimer && widget.onPressed != null)
+        widget.onPressed!();
         /*else {
           Fluttertoast.showToast(
             backgroundColor: Colors.red,
@@ -68,7 +69,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           padding: EdgeInsets.all(AppSpacing.spacingSmall.h),
           child: Text(widget.title ?? "-",
               style: widget.textStyle ??
-                  context.textTheme.labelLarge?.copyWith(color: AppColors.black)),
+                  context.textTheme.labelLarge
+                      ?.copyWith(color: AppColors.black)),
         ),
       ),
     );

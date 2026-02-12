@@ -7,14 +7,32 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.primary,
       elevation: 0,
-      titleTextStyle: TextStyle(color: AppColors.black, fontWeight: AppFontUtils.medium, fontSize: AppFontUtils.headline),
+      titleTextStyle: TextStyle(
+          color: AppColors.black,
+          fontWeight: AppFontUtils.medium,
+          fontSize: AppFontUtils.headline),
     ),
     textTheme: TextTheme(
-      displayLarge: TextStyle(color: AppColors.black, fontWeight: AppFontUtils.medium, fontSize: AppFontUtils.headline),
-      titleMedium: TextStyle(color: AppColors.black, fontWeight: AppFontUtils.regular, fontSize: AppFontUtils.subtitle),
-      bodyLarge: TextStyle(color: AppColors.black, fontWeight: AppFontUtils.regular, fontSize: AppFontUtils.body),
-      labelLarge: TextStyle(color: AppColors.black, fontWeight: AppFontUtils.medium, fontSize: AppFontUtils.button),
-      bodySmall: TextStyle(color: AppColors.black, fontWeight: AppFontUtils.regular, fontSize: AppFontUtils.caption),
+      displayLarge: TextStyle(
+          color: AppColors.black,
+          fontWeight: AppFontUtils.medium,
+          fontSize: AppFontUtils.headline),
+      titleMedium: TextStyle(
+          color: AppColors.black,
+          fontWeight: AppFontUtils.regular,
+          fontSize: AppFontUtils.subtitle),
+      bodyLarge: TextStyle(
+          color: AppColors.black,
+          fontWeight: AppFontUtils.regular,
+          fontSize: AppFontUtils.body),
+      labelLarge: TextStyle(
+          color: AppColors.black,
+          fontWeight: AppFontUtils.medium,
+          fontSize: AppFontUtils.button),
+      bodySmall: TextStyle(
+          color: AppColors.black,
+          fontWeight: AppFontUtils.regular,
+          fontSize: AppFontUtils.caption),
     ),
   );
 
